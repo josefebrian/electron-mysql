@@ -7,7 +7,13 @@
         <div id="table"></div>
 
         <script type="text/javascript">
-
+        var storage = require('electron-json-storage');
+        var app = require('electron');
+        storage.get('nama_user',function(error,data){
+          if(error) throw error;
+          var name = JSON.parse(data);
+          document.getElementById("table").innerHTML = name.nama_user;
+        });
         </script>
     </body>
 </html>

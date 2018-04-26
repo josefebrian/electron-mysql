@@ -81,7 +81,7 @@ exp.use(express.static('public'))
 
 var mysql      = require('mysql');
 var db = mysql.createConnection({
-  host     : '66.96.231.241',
+  host     : '192.168.0.11',
   user     : 'toko',
   password : 'test',
   database : 'toko_12166218'
@@ -98,19 +98,10 @@ var pilih = "nama_user";
       var Obj=(results[0]);
       var myJson = JSON.stringify(Obj);
 
-      console.log(myJson);
-
-      // document.getElementById("table").innerHTML = text.nama_user;
-      // console.log(text[pilih]);
       storage.set('nama_user',myJson,function(error){
       if(error) throw error;
-    });
-      // storage.get('nama_user',function(error,data){
-      //   if(error) throw error;
-      //   console.log(data);
-      // });
-      // });
-      // localStorage,setItem("testJSON",myJson);
+      });
+
   });
 });
 
