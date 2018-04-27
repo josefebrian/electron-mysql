@@ -17,12 +17,18 @@ let mainWindow
 
 function createWindow () {
 
-  // var request = require('request');
-  //   request('http://localhost:3000/user', function (error, response, body) {
-  //       console.log('error:', error); // Print the error if one occurred
-  //       console.log('statusCode:', response && response.statusCode); // Print the response status code if a response was received
-  //       console.log('body:', body); // Print the HTML for the Google homepage.
-  // });
+  var request = require('request');
+    request('http://192.168.0.11:3000/execquery/12', function (error, response, body) {
+        // console.log('error:', error); // Print the error if one occurred
+        // console.log('statusCode:', response && response.statusCode); // Print the response status code if a response was received
+        // console.log('body:', body); // Print the HTML for the Google homepage.
+        var Obj=(body);
+        // var myJson = JSON.parse(body);
+        storage.set('seri_barang',Obj,function(error){
+        if(error) throw error;
+        });
+        // console.log(myJson[0].seri);
+  });
   // Create the browser window.
   mainWindow = new BrowserWindow({width: 700, height: 500})
 
@@ -77,37 +83,37 @@ function createWindow () {
 // Some APIs can only be used after this event occurs.
 app.on('ready', createWindow)
 
-exp.use(express.static('public'))
-
-var mysql      = require('mysql');
-var db = mysql.createConnection({
-  host     : '192.168.0.11',
-  user     : 'toko',
-  password : 'test',
-  database : 'toko_12166218'
-});
-var pilih = "nama_user";
-  exp.get('/user', (req, res) => {
-  let sql = 'SELECT * FROM user';
-  let query = db.query(sql,function(err, results)
-  {
-    //untuk pilih key dalam object results
-    var pilih = "nama_user";
-      if (err) throw err;
-      //pilih row 1 dari results dimsukin ke variable obj
-      var Obj=(results[0]);
-      var myJson = JSON.stringify(Obj);
-
-      storage.set('nama_user',myJson,function(error){
-      if(error) throw error;
-      });
-
-  });
-});
-
-exp.listen(3000, function () {
-  console.log('Example app listening on port 3000!');
-});
+// exp.use(express.static('public'))
+//
+// var mysql      = require('mysql');
+// var db = mysql.createConnection({
+//   host     : '192.168.0.11',
+//   user     : 'root',
+//   password : 'ijasabb35',
+//   database : '3cahaya'
+// });
+// var pilih = "nama_user";
+//   exp.get('/user', (req, res) => {
+//   let sql = 'SELECT * FROM user';
+//   let query = db.query(sql,function(err, results)
+//   {
+//     //untuk pilih key dalam object results
+//     var pilih = "nama_user";
+//       if (err) throw err;
+//       //pilih row 1 dari results dimsukin ke variable obj
+//       var Obj=(results[0]);
+//       var myJson = JSON.stringify(Obj);
+//
+//       storage.set('nama_user',myJson,function(error){
+//       if(error) throw error;
+//       });
+//
+//   });
+// });
+//
+// exp.listen(3000, function () {
+//   console.log('Example app listening on port 3000!');
+// });
 
 
 

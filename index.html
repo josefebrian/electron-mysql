@@ -9,10 +9,10 @@
         <script type="text/javascript">
         var storage = require('electron-json-storage');
         var app = require('electron');
-        storage.get('nama_user',function(error,data){
+        storage.get('seri_barang',function(error,data){
           if(error) throw error;
-          var name = JSON.parse(data);
-          document.getElementById("table").innerHTML = name.nama_user;
+          var barang = JSON.parse(data);
+          document.getElementById("table").innerHTML = barang[0].id_barang;
         });
         </script>
     </body>
