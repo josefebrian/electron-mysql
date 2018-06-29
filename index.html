@@ -1,19 +1,115 @@
 <html>
     <head>
         <title>My db rows</title>
+        <style>
+
+        body{
+          background-color: #1968B2;
+        }
+
+        table{
+          position: relative;
+          top: 20;
+          bottom: 20;
+        }
+
+        table, th, td{
+          border: 1px solid black;
+          background-color: #ffffff;
+        }
+
+        th{
+          position: sticky;
+          top: 0;
+        }
+
+        button{
+          position: relative;
+          top: 30;
+        }
+
+        </style>
     </head>
 
     <body>
-        <div id="table"></div>
+        <img src="/home/jose/Documents/Kuliah/3Cahaya/ProgramInventoriTigaCahaya/src/tigacahaya/res/tiga_cahaya_logo.png">
 
-        <script type="text/javascript">
+        <table style="width:100%">
+        <tr>
+        <th>ID Barang</th>
+        <th>Jenis</th>
+        <th>Merk</th>
+        </tr>
+        <tr>
+        <td id="idBarang"></td>
+        <td id="Jenis"></td>
+        <td id="Merk"></td>
+        </tr>
+        </table>
+
+        <button type="button" onclick="test1()">data</button>
+        <button type="button" onclick="test()">all</button>
+
+<script type="text/javascript">
+        // variable declaration
         var storage = require('electron-json-storage');
         var app = require('electron');
+        var request = require('request');
+        var x = "";
+        var y = "";
+        var z = "";
+        //retrive data from storage
         storage.get('seri_barang',function(error,data){
           if(error) throw error;
           var barang = JSON.parse(data);
-          document.getElementById("table").innerHTML = barang[0].id_barang;
+          //to display many data
+          for (i = 0; i < barang.length; i++) {
+              x += barang[i].id_barang + "<br>";
+              y += barang[i].jenis + "<br>";
+              z += barang[i].merk + "<br>";
+          };
+          //insert data to html
+          document.getElementById("idBarang").innerHTML = x;
+          document.getElementById("Jenis").innerHTML = y;
+          document.getElementById("Merk").innerHTML = z;
         });
-        </script>
+
+        //function to choose how many data you want to display
+
+        //display 1 data
+        function test1(){
+          try {
+              //request server to execute query
+              request('http://192.168.0.3:3000/execquery/1', function (error, response, body) {
+                //save data from server to storage
+                var Obj=(body);
+                storage.set('seri_barang',Obj,function(error){
+                if(error) throw error;
+                });
+            })
+          } catch (err) {
+            throw err
+          }
+          setTimeout(1000000);
+      location.reload();
+      };
+
+      //display all data
+      function test(){
+        try {
+            request('http://192.168.0.3:3000/execquery', function (error, response, body) {
+              var Obj=(body);
+              storage.set('seri_barang',Obj,function(error){
+              if(error) throw error;
+              });
+          })
+        } catch (err) {
+          throw err
+        }
+        setTimeout(1000000);
+    location.reload();
+    };
+
+</script>
     </body>
 </html>

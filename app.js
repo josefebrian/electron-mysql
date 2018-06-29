@@ -17,20 +17,20 @@ let mainWindow
 
 function createWindow () {
 
-  var request = require('request');
-    request('http://192.168.0.11:3000/execquery/12', function (error, response, body) {
-        // console.log('error:', error); // Print the error if one occurred
-        // console.log('statusCode:', response && response.statusCode); // Print the response status code if a response was received
-        // console.log('body:', body); // Print the HTML for the Google homepage.
-        var Obj=(body);
-        // var myJson = JSON.parse(body);
-        storage.set('seri_barang',Obj,function(error){
-        if(error) throw error;
-        });
-        // console.log(myJson[0].seri);
-  });
+  // var request = require('request');
+  //   request('http://192.168.0.3:3000/execquery', function (error, response, body) {
+  //       // console.log('error:', error); // Print the error if one occurred
+  //       // console.log('statusCode:', response && response.statusCode); // Print the response status code if a response was received
+  //       // console.log('body:', body); // Print the HTML for the Google homepage.
+  //       var Obj=(body);
+  //
+  //       storage.set('seri_barang',Obj,function(error){
+  //       if(error) throw error;
+  //       });
+  //       // console.log(app.getPath('userData'));
+  // });
   // Create the browser window.
-  mainWindow = new BrowserWindow({width: 700, height: 500})
+  mainWindow = new BrowserWindow({width: 700, height: 650})
 
   // and load the index.html of the app.
   mainWindow.loadURL(url.format({
