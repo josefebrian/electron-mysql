@@ -25,7 +25,12 @@
 
         button{
           position: relative;
+        }
+
+        form{
+          position: relative;
           top: 30;
+          background-color: #1968B2;
         }
 
         </style>
@@ -47,8 +52,16 @@
         </tr>
         </table>
 
-        <button type="button" onclick="test1()">data</button>
-        <button type="button" onclick="test()">all</button>
+        <form enctype='application/json'>
+          nomor: <input name='no' id="nomor">
+          id: <input name='id' id="id">
+          nama: <input name='nama' id="nama">
+          <button type="button" onclick="test1()">data</button>
+          <button type="button" onclick="test()">all</button>
+          <button type="button" onclick="post()">add</button>
+        </form>
+
+
 
 <script type="text/javascript">
         // variable declaration
@@ -80,7 +93,7 @@
         function test1(){
           try {
               //request server to execute query
-              request('http://192.168.0.3:3000/execquery/1', function (error, response, body) {
+              request('http://192.168.0.3:3000/execquery/' + document.getElementById("nomor").value, function (error, response, body) {
                 //save data from server to storage
                 var Obj=(body);
                 storage.set('seri_barang',Obj,function(error){
@@ -107,8 +120,18 @@
           throw err
         }
         setTimeout(1000000);
-    location.reload();
+        location.reload();
     };
+
+    function post(){
+      request('http://192.168.0.3:3000/addItem/' + document.getElementById("id").value + "/'" + document.getElementById("nama").value + "'",
+      function (error, response, body) {
+        var Obj=(body);
+        storage.set('seri_barang',Obj,function(error){
+        if(error) throw error;
+        });
+    })
+    }
 
 </script>
     </body>
